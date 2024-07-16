@@ -11,6 +11,7 @@ const Loading = () => {
     const time = setInterval(() => {
       if (progress < 100) {
         setProgress((p) => p + 1);
+        console.log(progress);
       }
     }, 20);
 

@@ -14,7 +14,7 @@ const Home = async() => {
     //     bg
     // }
     
-    await wait(3000);
+    await wait(4000);
 
     // const colors = ['#fdf6d2', '#d5ece1', '#fee2d7', '#e6f7f5', '#fbe4e6', '#e3e7fd' ]
     function getRandomColor() {
