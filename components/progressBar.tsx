@@ -1,4 +1,4 @@
-
+'use client'
 
 const ProgressBar = ({ progress , color}:{progress:any, color:string}) => {
 
