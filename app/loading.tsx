@@ -32,7 +32,17 @@ const Loading = () => {
         Get Notes
       </div>
       <div>
-        <ProgressBar progress={progress} color='#333' />
+      <div className="mt-[50px] w-[300px] sm:w-[400px] md:w-[600px]">
+      <div className="h-[5px] w-full rounded-[20px] bg-gray-200">
+        <div
+          className="h-full rounded-[20px]"
+          style={{
+            width: `${progress}%`,
+            backgroundColor: '#333',
+          }}
+        ></div>
+      </div>
+    </div>
       </div>
     </div>
   );
