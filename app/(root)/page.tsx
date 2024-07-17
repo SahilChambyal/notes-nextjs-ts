@@ -1,6 +1,6 @@
 
 import { Input } from '@/components/input';
-import Notes from '@/components/note';
+import Notes     from '@/components/note';
 import Sidebar from '@/components/sidebar';
 import { wait } from '@/lib/wait';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
@@ -39,7 +39,7 @@ const Home = async() => {
     const notes = [
         {
             title: 'Note 1',
-            content: 'This is the first component of notes app ui built on nextJS/react/ts'+("Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, adipisci voluptates cum explicabo voluptatibus magni, veritatis nam soluta aut commodi, temporibus nisi minima possimus fugiat officiis sed tempora. Suscipit, incidunt eaque ipsam harum in quisquam sapiente eos eveniet deserunt numquam!"),
+            content: 'This is the first component of notes app ui built on nextJS/react/ts'+("Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, adipisci voluptates cum explicabo voluptatibus magni, veritatis nam soluta aut commodi"),
             time: Date.now(),
             bg:getRandomColor()
         },
