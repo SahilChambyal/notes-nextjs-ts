@@ -1,4 +1,3 @@
-'use client'
 
 import { Input } from '@/components/input';
 import Notes from '@/components/note';
@@ -15,7 +14,7 @@ const Home = async() => {
     //     bg
     // }
     
-    await wait(3500);
+    await wait(4000);
 
     // const colors = ['#fdf6d2', '#d5ece1', '#fee2d7', '#e6f7f5', '#fbe4e6', '#e3e7fd' ]
     function getRandomColor() {
@@ -37,19 +36,10 @@ const Home = async() => {
         return colors[randomIndex];
       }
 
-      const addNew = () => {
-        notes.unshift({
-            title:'',
-            content:'',
-            time: Date.now(),
-            bg:getRandomColor()
-        })
-      }
-
-    const notes= [
+    const notes = [
         {
             title: 'Note 1',
-            content: 'This is the first component of notes app ui built on nextJS/react/ts'+("Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, adipisci voluptates cum explicabo voluptatibus magni, veritatis nam soluta aut commodi, "),
+            content: 'This is the first component of notes app ui built on nextJS/react/ts'+("Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, adipisci voluptates cum explicabo voluptatibus magni, veritatis nam soluta aut commodi, temporibus nisi minima possimus fugiat officiis sed tempora. Suscipit, incidunt eaque ipsam harum in quisquam sapiente eos eveniet deserunt numquam!"),
             time: Date.now(),
             bg:getRandomColor()
         },
@@ -108,8 +98,6 @@ const Home = async() => {
             bg:getRandomColor()
         },
     ]
-
-    
 //     
     return ( 
         <div className='transition-transform flex md:flex-row h-full w-full'>
