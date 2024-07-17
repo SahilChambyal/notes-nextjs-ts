@@ -14,8 +14,12 @@ const Loading = () => {
           return p + 1;
         } else {
           clearInterval(interval);
-          return p;
+          p=0
+          return 100;
         }
+        // if( p> 100){
+
+        // }
       });
       console.log(progress)
     }, 20);
