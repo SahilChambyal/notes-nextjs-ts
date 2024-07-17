@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Pen, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 interface NoteProps {
   title: string;
@@ -15,45 +16,47 @@ const Notes = ({ title, content, time, bgColor }: NoteProps) => {
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
   const day = date.getDate().toString().padStart(2, '0');
 
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [noteText, setNoteText] = useState(content);
 
-  useEffect(() => {
-    const { current } = contentRef;
-    if (current) {
-      setIsOverflowing(current.scrollHeight > current.clientHeight);
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length <= 250) {
+      setNoteText(e.target.value);
     }
-  }, [content]);
-
-  const toggleReadMore = () => {
-    setIsExpanded(!isExpanded);
   };
 
   return (
     <div
-      className="min-w-[280px] sm:min-w-[200px] max-w-[320px] h-[280px] col-span-1 m-3 p-3 rounded-xl shadow-md flex flex-col justify-between"
+      className="w-[280px] sm:w-auto sm:min-w-[200px] sm:max-w-[320px] h-[280px] col-span-1 m-3 p-3 rounded-xl shadow-md flex flex-col justify-between items-center"
       style={{ backgroundColor: bgColor }}
     >
       {/* Title */}
       {/* <div>{title}</div> */}
       
       {/* Content */}
-      <div
-        ref={contentRef}
-        className={`mt-4 text-gray-700 overflow-hidden p-2 transition-all h-[65%] `}
-      >
-        {content}
-        {/* {isOverflowing && (
-          <button onClick={toggleReadMore} className="text-blue-500 mt-2">
-            {isExpanded ? 'Read Less' : 'Read More'}
-          </button>
-        )} */}
+      <div className='mt-4 text-gray-700 p-2 transition-all h-[75%] w-[95%] cursor-default'>
+        <textarea 
+          title='content'
+          value={noteText}
+          onChange={handleTextChange}
+          maxLength={250}
+          className='w-full h-full p-2 bg-transparent border-none outline-none overflow-y-clip resize-none '
+        />
+        <div className='text-gray-500 text-sm w-full justify-end flex items-end'>
+          {noteText.length} / 250
+        </div>
       </div>
       
       {/* Date */}
-      <div className="text-[14px] text-gray-500 font-sans">
+      <div className="text-[14px] text-gray-500 font-sans flex justify-between w-full">
         {`${year}-${month}-${day}`}
+        <div className='flex text-gray-500 gap-3 '>
+          {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
+            <Pen size={20} />
+          </div> */}
+          <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
+            <Trash2 size={20} />
+          </div>
+        </div>
       </div>
     </div>
   );
