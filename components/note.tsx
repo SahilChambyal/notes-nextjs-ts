@@ -33,7 +33,7 @@ const Notes = ({ title, content, time, bgColor }: NoteProps) => {
 
   return (
     <div
-      className="w-[280px] sm:w-auto sm:min-w-[200px] sm:max-w-[320px] h-[280px] col-span-1 m-3 p-3 rounded-xl shadow-md flex flex-col justify-between items-center"
+      className="w-[280px] sm:w-auto sm:min-w-[200px] sm:max-w-[320px] h-[280px] col-span-1 m-3 p-3 rounded-xl shadow-md flex flex-col justify-between items-center hover:translate-y-[-4px] transition-all"
       style={{ backgroundColor: bgColor }}
     >
       {/* Title */}
