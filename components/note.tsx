@@ -1,6 +1,6 @@
 'use client';
 
-import { Pen, Trash2 } from 'lucide-react';
+import { Pen, Save, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 /**
@@ -26,6 +26,7 @@ interface NoteProps {
    * A promise that resolves when the note is deleted.
    */
   onDelete: () => Promise<void>;
+  onEdit: (newText:string) => Promise<void>;
 }
 
 const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
@@ -35,6 +36,7 @@ const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
   const day = date.getDate().toString().padStart(2, '0');
 
   const [noteText, setNoteText] = useState(content);
+  const [isEditing, setIsEditing] = useState(false);
 
 
 
@@ -78,11 +80,19 @@ const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
           {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
             <Pen size={20} />
           </div> */}
-          <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
-          onClick={onDelete}
-          >
-            <Trash2 size={20} />
-          </div>
+            {isEditing ?
+            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
+            onClick={onDelete}
+            >
+              <Save size={20} />
+            </div>
+            :
+            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
+            onClick={onDelete}
+            >
+              <Trash2 size={20} />
+            </div>
+            }
         </div>
       </div>
     </div>

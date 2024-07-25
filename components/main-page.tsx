@@ -14,36 +14,25 @@ const MainPage = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date");
-  // if(typeof window !== "undefined"){
-
-    const username = localStorage.getItem("username") || "User";
-  // }
-  const MAX_CHARS = 200;
-  const [logged, setLogged] = useState(false)
+  const username = localStorage.getItem("username") || "User";
+  const MAX_CHARS = 250;
+//   const [logged, setLogged] = useState(false)
 
   const router = useRouter()
 
   const logout = () => {
-    // if(typeof window !== 'undefined'){
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    // }
     window.location.href = '/login';
   };
 
-  // if(!logged){
-  //   router.push('/login');
-  //   setLogged(true)
-  // }
   
   useEffect(() => {
-    addNote()
+    // addNote()
     fetchNotes();
-    // if(typeof window !== 'undefined'){
 
       const savedTheme = localStorage.getItem("theme") || "light";
       setDarkMode(savedTheme === "dark");
-    // }
   }, []);
 
   const fetchNotes = async () => {
@@ -87,13 +76,13 @@ const MainPage = () => {
       } catch (error) {
         console.error("Error adding note:", error);
       }
-      finally{
-        // location.reload()
-      }
+    //   finally{
+    //     // location.reload()
+    //   }
     }
   };
 
-  const deleteNote = async (id) => {
+  const deleteNote = async (id:any) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`https://notes-backend-express.onrender.com/api/notes/${id}`, {
@@ -103,9 +92,6 @@ const MainPage = () => {
       setNotes(notes.filter((note) => note._id !== id));
     } catch (error) {
       console.error("Error deleting note:", error);
-    }
-    finally{
-      // location.reload()
     }
   };
 
@@ -158,12 +144,14 @@ const MainPage = () => {
         /> */}
         <Search className="mr-2" size={24} />
         <input
-        className=
-          "flex h-10 w-[80%] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-        type='text'
-        placeholder='Search Notes'
+            className=
+            "flex h-10 w-[80%] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            type='text'
+            placeholder='Search Notes'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
         
-      />
+        />
       <div className='text-gray-500 ml-[20px] md:ml-[40px] cursor-pointer hover:font-bold hover:scale-110 hover:text-[#333] mr-4'>
       <Moon />
 
@@ -233,14 +221,20 @@ const MainPage = () => {
         </div>
       </div>
     </div>
-                   { notes.map((item, i) => (
+                   {sortedNotes
+                        .filter((note) =>
+                        note.text.toLowerCase().includes(searchTerm.toLowerCase())
+                        ).map((note) => (
                         <Notes 
-                          onDelete={() => deleteNote(item._id)}
-                          key={i}
-                          // title={item.title}
-                          content={item.text}
-                          time={item.date}
-                          bgColor={item.color}
+                        key={note._id}
+                        content={note.text}
+                        time={note.date}
+                        bgColor={note.color}
+                        onDelete={() => deleteNote(note._id)}
+                        onEdit={(newText) => editNote(note._id, newText)}
+                          // title={note.title}
+                        //   time={note.date}
+                        //   bgColor={note.color}
                         />
                     ))}
                 </div>
