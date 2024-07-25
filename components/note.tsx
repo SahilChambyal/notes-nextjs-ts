@@ -29,7 +29,7 @@ interface NoteProps {
   onEdit: (newText:string) => Promise<void>;
 }
 
-const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
+const Notes = ({ content, time, bgColor, onDelete, onEdit }: NoteProps) => {
   const date = new Date(time);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
@@ -38,11 +38,17 @@ const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
   const [noteText, setNoteText] = useState(content);
   const [isEditing, setIsEditing] = useState(false);
 
+  const handleEdit = () => {
+    onEdit(noteText);
+    setIsEditing(false);
+  };
+
 
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 250) {
       setNoteText(e.target.value);
+      setIsEditing(true)
 
     }
 
@@ -68,8 +74,15 @@ const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
           maxLength={250}
           className='w-full h-full p-2 bg-transparent border-none outline-none overflow-y-clip resize-none '
         />
-        <div className='text-gray-500 text-sm w-full justify-end flex items-end'>
-          {noteText.length} / 250
+        <div className='text-gray-500 text-sm w-full justify-end items-end'
+        style={{
+          display: !isEditing ? "none" : "flex"
+        }}
+        >
+          {/* {isEditing ? */}
+            {noteText.length} / 250
+            
+          {/* } */}
         </div>
       </div>
       
@@ -82,7 +95,7 @@ const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
           </div> */}
             {isEditing ?
             <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
-            onClick={onDelete}
+            onClick={handleEdit}
             >
               <Save size={20} />
             </div>
