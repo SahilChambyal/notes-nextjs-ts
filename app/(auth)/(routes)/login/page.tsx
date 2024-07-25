@@ -1,5 +1,4 @@
-// src/components/LoginPage.js
-'use client'
+"use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 // import { useNavigate } from 'react-router-dom';
@@ -22,8 +21,10 @@ const LoginPage = () => {
       const response = await axios.post(`https://notes-backend-express.onrender.com${endpoint}`, { username, password });
       // const response = await axios.post(`http://localhost:5000${endpoint}`, { username, password });
       if (response.data.token) {
+        // if(typeof window !== 'undefined'){
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', response.data.username);
+      // }
         navigate.push('/');
       } else {
         alert(response.data.message);
