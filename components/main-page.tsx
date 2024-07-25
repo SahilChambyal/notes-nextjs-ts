@@ -16,6 +16,13 @@ const MainPage = () => {
   const [sortBy, setSortBy] = useState("date");
   const username = localStorage.getItem("username") || "User";
   const MAX_CHARS = 250;
+
+  const [isLogged, setIsLogged] = useState(localStorage.getItem('isLogged') === 'true');
+
+  if(!isLogged){
+      window.location.href = '/login'
+      console.log('isLogged: '+ isLogged)
+    }
 //   const [logged, setLogged] = useState(false)
 
   const router = useRouter()
@@ -23,6 +30,9 @@ const MainPage = () => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('isLogged');
+    // localStorage.setItem('isLogged','false')
+    setIsLogged(false)
     window.location.href = '/login';
   };
 
@@ -153,7 +163,7 @@ const MainPage = () => {
         
         />
       <div className='text-gray-500 ml-[20px] md:ml-[40px] cursor-pointer hover:font-bold hover:scale-110 hover:text-[#333] mr-4'>
-      <Moon />
+      {/* <Moon /> */}
 
       </div>
             </div>

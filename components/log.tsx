@@ -6,7 +6,7 @@ import axios from 'axios';
 // import './LoginPage.css';
 
 // function LoginPage({ setLoading }:{setLoading: (value: boolean) => void}) {
-const LoginPage = () => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
@@ -24,7 +24,6 @@ const LoginPage = () => {
         // if(typeof window !== 'undefined'){
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', response.data.username);
-        localStorage.setItem('isLogged', "true");
       // }
         navigate.push('/');
       } else {
@@ -106,4 +105,4 @@ const LoginPage = () => {
   );
 }
 
-export default LoginPage;
+export default Login;
