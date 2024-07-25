@@ -38,7 +38,7 @@ const Sidebar = ({logout}:SidebarProps) => {
             onClick={logout}
             >
 
-            <LogOut size={32}/>
+            <LogOut />
             </div>
             
 
