@@ -17,15 +17,15 @@ const MainNav = () => {
                 <Home />
                 </div>
             </div>
-            <div className='p-4 px-3 text-gray-500 hover:text-white'>
+            {/* <div className='p-4 px-3 text-gray-500 hover:text-white'>
             <PlusIcon size={32} />
-            </div>
+            </div> */}
         </div>
         
             <div className=' text-sm flex items-center justify-center gap-4 font-medium px-3 py-3.5  border rounded-[12px] md:w-[120px] border-transparent text-muted-foreground  md:h-[30%]'>
                 <div className='mt-auto md:mb-4 justify-center items-center'>
 
-              <UserButton afterSignOutUrl="/" />
+              {/* <UserButton afterSignOutUrl="/" /> */}
                 </div>
                 </div>
             </div>

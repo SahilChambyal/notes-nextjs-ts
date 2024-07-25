@@ -1,16 +1,25 @@
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import NoteLogo from '@/components/noteLogo'
-import { PenLine } from 'lucide-react';
+import { LogOut, PenLine } from 'lucide-react';
 import MainNav from './main-nav';
 
-const Sidebar = () => {
+interface SidebarProps {
 
-    const {userId} = auth();
+    logout: () => void;
+  
+  }
+  
+  
 
-    if(!userId){
-      redirect("/sign-in");
-    }
+const Sidebar = ({logout}:SidebarProps) => {
+    
+
+    // const {userId} = auth();
+
+    // if(!userId){
+    //   redirect("/sign-in");
+    // }
   
 
     return ( 
@@ -25,6 +34,12 @@ const Sidebar = () => {
             <MainNav />
             </div>
             {/* userprofile */}
+            <div className='text-white cursor-pointer md:pb-4'
+            onClick={logout}
+            >
+
+            <LogOut size={32}/>
+            </div>
             
 
         </div>

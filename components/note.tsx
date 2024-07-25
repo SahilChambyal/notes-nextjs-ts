@@ -3,14 +3,32 @@
 import { Pen, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
+/**
+ * Represents the props for the Note component.
+ */
 interface NoteProps {
-  title: string;
+  /**
+   * The content of the note.
+   */
   content: string;
-  time: number;
+  
+  /**
+   * The time when the note was created.
+   */
+  time: Date;
+  
+  /**
+   * The background color of the note.
+   */
   bgColor: string;
+  
+  /**
+   * A promise that resolves when the note is deleted.
+   */
+  onDelete: () => Promise<void>;
 }
 
-const Notes = ({ title, content, time, bgColor }: NoteProps) => {
+const Notes = ({ content, time, bgColor, onDelete }: NoteProps) => {
   const date = new Date(time);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
@@ -60,7 +78,9 @@ const Notes = ({ title, content, time, bgColor }: NoteProps) => {
           {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
             <Pen size={20} />
           </div> */}
-          <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
+          <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
+          onClick={onDelete}
+          >
             <Trash2 size={20} />
           </div>
         </div>

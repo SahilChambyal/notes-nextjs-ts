@@ -1,108 +1,132 @@
-
-import { Input } from '@/components/input';
-import Notes     from '@/components/note';
-import Sidebar from '@/components/sidebar';
-import { wait } from '@/lib/wait';
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
+'use client'
+// src/components/MainPage.js
+import React, { useState, useEffect } from "react";
 import { Hand, Moon, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import Notes from '@/components/note';
+import Sidebar from '@/components/sidebar';
+// import "./MainPage.css";
 
-const Home = async() => {
+function MainPage() {
+  const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("date");
+  const username = localStorage.getItem("username") || "User";
+  const MAX_CHARS = 200;
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    window.location.href = '/login';
+  };
+  
+  useEffect(() => {
+    addNote()
+    fetchNotes();
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setDarkMode(savedTheme === "dark");
+  }, []);
 
-    // const Colors = {
-    //     bg
-    // }
-    
-    await wait(4000);
+  const fetchNotes = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("https://notes-backend-express.onrender.com/api/notes", {
+      // const response = await axios.get("http://localhost:5000/api/notes", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotes(response.data);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
+  };
 
-    // const colors = ['#fdf6d2', '#d5ece1', '#fee2d7', '#e6f7f5', '#fbe4e6', '#e3e7fd' ]
-    function getRandomColor() {
-        const colors = ['#fdf6d2', '#d5ece1', '#fee2d7', '#e6f7f5', '#fbe4e6', '#e3e7fd'];
-      
-        // Additional entropy from current time in milliseconds
-        const entropy = Date.now() % colors.length;
-      
-        // Multiple rounds of Fisher-Yates (Knuth) shuffle algorithm
-        for (let k = 0; k < entropy; k++) {
-          for (let i = colors.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [colors[i], colors[j]] = [colors[j], colors[i]];
+  const getRandomColor = () => {
+    const colors = [
+        '#fdf6d2', '#d5ece1', '#fee2d7', '#e6f7f5', '#fbe4e6', '#e3e7fd'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const addNote = async () => {
+    if (newNote.trim() && newNote.length <= MAX_CHARS) {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          "https://notes-backend-express.onrender.com/api/notes",
+          // "http://localhost:5000/api/notes",
+          {
+            text: newNote,
+            color: getRandomColor(),
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
           }
-        }
-      
-        // Return a random element from the shuffled array
-        const randomIndex = Math.floor(Math.random() * colors.length);
-        return colors[randomIndex];
+        );
+        setNotes([...notes, response.data]);
+        // setNotes([response.data, ...notes]);
+        setNewNote("");
+      } catch (error) {
+        console.error("Error adding note:", error);
       }
+      finally{
+        // location.reload()
+      }
+    }
+  };
 
-    const notes = [
+  const deleteNote = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`https://notes-backend-express.onrender.com/api/notes/${id}`, {
+      // await axios.delete(`http://localhost:5000/api/notes/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotes(notes.filter((note) => note._id !== id));
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+    finally{
+      // location.reload()
+    }
+  };
+
+  const editNote = async (id, newText) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `https://notes-backend-express.onrender.com/api/notes/${id}`,
+        // `http://localhost:5000/api/notes/${id}`,
+        { text: newText },
         {
-            title: 'Note 1',
-            content: 'This is the first component of notes app ui built on nextJS/react/ts'+("Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, adipisci voluptates cum explicabo voluptatibus magni, veritatis nam soluta aut commodi"),
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 2',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-        {
-            title: 'Note 3',
-            content: 'This is the',
-            time: Date.now(),
-            bg:getRandomColor()
-        },
-    ]
-//     
-    return ( 
-        <div className='transition-transform flex md:flex-row h-full w-full'>
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNotes(notes.map((note) => (note._id === id ? response.data : note)));
+    } catch (error) {
+      console.error("Error editing note:", error);
+    }
+  };
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    localStorage.setItem("theme", darkMode ? "light" : "dark");
+  };
+
+  const sortedNotes = [...notes].sort((a, b) => {
+    if (sortBy === "date") {
+      return Number(new Date(b.date)) - Number(new Date(a.date));
+    } else {
+      return a.text.localeCompare(b.text);
+    }
+  });
+  
+
+  return (
+    <div className='transition-transform flex md:flex-row h-full w-full'>
             <div className='z-10 bg-[#000]/30 md:bg-[#3c3d43] backdrop-blur-lg transition-all w-full md:block md:col-span-2 pl-0 md:max-w-[150px]  md:h-full fixed overflow-clip h-[70px] items-center top-0'>
-                <Sidebar />
+                <Sidebar logout={() => logout()} />
             </div>
             <div className='mt-[100px] bg-[#fffdfa] md:col-span-10 ml-[50px] md:ml-[150px] md:pl-[150px] md:mt-6 w-full '>
             <div className="flex items-center py-4 ">
@@ -130,25 +154,82 @@ const Home = async() => {
             </div>
                 <div className='flex items-center mt-5 '>
                     <h1 className='text-3xl flex'>
-                        <p>Hello, __</p><p className='font-bold'>{`User`}</p><p>👋</p>
+                        <p>Hello, __</p><p className='font-bold'>{`${username}`}</p><p>👋</p>
                     </h1>
                 </div>
                     <p className='mt-5'>All you notes are here, in one place!</p>
 
                 <div className='transition-all flex flex-col sm:grid w-[90%] h-auto  sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-evenly'>
+                    {/* <div className="note new-note">
+                        <textarea
+                        placeholder="Type to add a new note..."
+                        value={newNote}
+                        onChange={(e) => setNewNote(e.target.value.slice(0, MAX_CHARS))}
+                        ></textarea>
+                        <div className="note-footer">
+                        <small>{MAX_CHARS - newNote.length} characters remaining</small>
+                        <button
+                            onClick={addNote}
+                            disabled={newNote.length === 0 || newNote.length > MAX_CHARS}
+                        >
+                            Add Note
+                        </button>
+                        </div>
+                    </div> */}
+                    <div
+      className="w-[280px] sm:w-auto sm:min-w-[200px] sm:max-w-[320px] h-[280px] col-span-1 m-3 p-3 rounded-xl shadow-md flex flex-col justify-between items-center hover:translate-y-[-4px] transition-all"
+      style={{ backgroundColor: '#f3f3f3' }}
+    >
+      {/* Title */}
+      {/* <div>{title}</div> */}
+      
+      {/* Content */}
+      <div className='mt-4 text-gray-700 p-2 transition-all h-[75%] w-[95%] cursor-default'>
+        <textarea 
+          title='content'
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+          maxLength={250}
+          className='w-full h-full p-2 bg-transparent border-none outline-none overflow-y-clip resize-none '
+        />
+        <div className='text-gray-500 text-sm w-full justify-end flex items-end'>
+          {newNote.length} / 250
+        </div>
+      </div>
+      
+      {/* Date */}
+      <div className="text-[14px] text-gray-500 font-sans flex justify-between w-full">
+        {/* {`${year}-${month}-${day}`} */}
+        <div className='flex text-gray-500 gap-3 '>
+          {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
+            <Pen size={20} />
+          </div> */}
+          <button className='cursor-pointer'    
+                            onClick={addNote}
+                            disabled={newNote.length === 0 || newNote.length > MAX_CHARS}
+                        >
+                            Add Note
+                        </button>
+          {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
+            <Trash2 size={20} />
+          </div> */}
+        </div>
+      </div>
+    </div>
                    { notes.map((item, i) => (
                         <Notes 
-                        key={i}
-                        title={item.title}
-                        content={item.content}
-                        time={item.time}
-                        bgColor={item.bg}
+                          onDelete={() => deleteNote(item._id)}
+                          key={i}
+                          // title={item.title}
+                          content={item.text}
+                          time={item.date}
+                          bgColor={item.color}
                         />
                     ))}
                 </div>
             </div>
         </div>
-    );
+  );
 }
- 
-export default Home;
+
+export default MainPage;
