@@ -13,8 +13,18 @@ const LoginPage = () => {
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useRouter();
 
+  try{
+  // console.log('here')
+  if(localStorage.getItem('isLogged') === "true"){
+    window.location.href = '/';
+    // console.log('inside: '+localStorage.getItem('isLogged'))
+  }
+  }catch(err){
+    console.log(err)
+  }
   const handleSubmit = async (e:any) => {
     e.preventDefault();
+    
     // setLoading(true);
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';

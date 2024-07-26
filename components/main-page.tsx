@@ -21,7 +21,7 @@ const MainPage = () => {
 
   if(!isLogged){
       window.location.href = '/login'
-      console.log('isLogged: '+ isLogged)
+      // console.log('isLogged: '+ isLogged)
     }
 //   const [logged, setLogged] = useState(false)
 
