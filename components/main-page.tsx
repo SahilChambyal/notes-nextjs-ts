@@ -84,6 +84,7 @@ const MainPage = () => {
         // setNotes([response.data, ...notes]);
         setNewNote("");
       } catch (error) {
+        window.location.href = '/login';
         console.error("Error adding note:", error);
       }
     //   finally{
