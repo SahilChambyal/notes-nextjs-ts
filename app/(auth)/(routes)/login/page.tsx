@@ -108,9 +108,15 @@ const LoginPage = () => {
             {isLogin ? 'Login' : 'Register'}
           </button>
         </form>
-        <p onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer', marginTop: '10px' }}>
-          {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
-        </p>
+        <div onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer', marginTop: '10px' }}>
+          {/* <div className='text-[#667eea]'> */}
+          {isLogin ? 'Need an account?' : 'Already have an account?'}
+          <div className='text-[#667eea]'>
+
+          {isLogin ? <p>Register</p> : <p>Login</p> }
+          </div>
+          {/* </div> */}
+        </div>
       </div>
     </div>
   );

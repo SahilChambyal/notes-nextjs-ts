@@ -19,7 +19,8 @@ const MainPage = () => {
 
   const [isLogged, setIsLogged] = useState(localStorage.getItem('isLogged') === 'true');
 
-  if(!isLogged){
+  if(!isLogged && !username){
+      localStorage.setItem('isLogged','false')
       window.location.href = '/login'
       // console.log('isLogged: '+ isLogged)
     }
@@ -54,6 +55,8 @@ const MainPage = () => {
       });
       setNotes(response.data);
     } catch (error) {
+      localStorage.setItem('isLogged','false')
+      window.location.href = '/login';
       console.error("Error fetching notes:", error);
     }
   };
@@ -84,6 +87,7 @@ const MainPage = () => {
         // setNotes([response.data, ...notes]);
         setNewNote("");
       } catch (error) {
+        localStorage.setItem('isLogged','false')
         window.location.href = '/login';
         console.error("Error adding note:", error);
       }
