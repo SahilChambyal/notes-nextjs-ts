@@ -1,7 +1,7 @@
 "use client"
 // src/components/MainPage.js
 import React, { useState, useEffect } from "react";
-import { Hand, Moon, Search } from 'lucide-react';
+import { Hand, Moon, Plus, Search } from 'lucide-react';
 import axios from "axios";
 import Notes from '@/components/note';
 import Sidebar from '@/components/sidebar';
@@ -224,10 +224,13 @@ const MainPage = () => {
           {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>
             <Pen size={20} />
           </div> */}
-          <button className='cursor-pointer'    
+          <button className='cursor-pointer hover:scale-105 hover:text-gray-700 gap-2' style={
+            {display:newNote.length>0?"flex":"none"}
+          }    
                             onClick={addNote}
                             disabled={newNote.length === 0 || newNote.length > MAX_CHARS}
                         >
+                          <Plus size={20}/>
                             Add Note
                         </button>
           {/* <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '>

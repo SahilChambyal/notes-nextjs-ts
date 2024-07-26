@@ -94,16 +94,18 @@ const Notes = ({ content, time, bgColor, onDelete, onEdit }: NoteProps) => {
             <Pen size={20} />
           </div> */}
             {isEditing ?
-            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
+            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer flex gap-2 '
             onClick={handleEdit}
             >
               <Save size={20} />
+              Save
             </div>
             :
-            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer '
+            <div className='hover:text-gray-700 hover:scale-110 cursor-pointer flex gap-2'
             onClick={onDelete}
             >
               <Trash2 size={20} />
+              {/* Delete */}
             </div>
             }
         </div>
