@@ -49,7 +49,7 @@ const MainPage = () => {
   const fetchNotes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://notes-backend-express.onrender.com/api/notes", {
+      const response = await axios.get("https://notes-backend-express.vercel.app/api/notes", {
       // const response = await axios.get("http://localhost:5000/api/notes", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -73,7 +73,7 @@ const MainPage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          "https://notes-backend-express.onrender.com/api/notes",
+          "https://notes-backend-express.vercel.app/api/notes",
           // "http://localhost:5000/api/notes",
           {
             text: newNote,
@@ -100,7 +100,7 @@ const MainPage = () => {
   const deleteNote = async (id:any) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`https://notes-backend-express.onrender.com/api/notes/${id}`, {
+      await axios.delete(`https://notes-backend-express.vercel.app/api/notes/${id}`, {
       // await axios.delete(`http://localhost:5000/api/notes/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -114,7 +114,7 @@ const MainPage = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `https://notes-backend-express.onrender.com/api/notes/${id}`,
+        `https://notes-backend-express.vercel.app/api/notes/${id}`,
         // `http://localhost:5000/api/notes/${id}`,
         { text: newText },
         {
