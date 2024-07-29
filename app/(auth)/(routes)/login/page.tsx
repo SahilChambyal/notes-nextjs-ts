@@ -28,7 +28,7 @@ const LoginPage = () => {
     // setLoading(true);
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await axios.post(`https://notes-backend-express.onrender.com${endpoint}`, { username, password });
+      const response = await axios.post(`https://notes-backend-express.vercel.app${endpoint}`, { username, password });
       // const response = await axios.post(`http://localhost:5000${endpoint}`, { username, password });
       if (response.data.token) {
         // if(typeof window !== 'undefined'){
