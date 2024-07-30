@@ -177,7 +177,7 @@ const MainPage = () => {
                         <p>Hello, __</p><p className='font-bold'>{`${username}`}</p><p>👋</p>
                     </h1>
                 </div>
-                    <p className='mt-5'>All you notes are here, in one place!</p>
+                    <p className='mt-5'>All your notes are here, in one place!</p>
 
                 <div className='transition-all flex flex-col sm:grid w-[90%] h-auto  sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-evenly'>
                     {/* <div className="note new-note">
